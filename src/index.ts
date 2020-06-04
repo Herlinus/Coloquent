@@ -4,6 +4,9 @@
 import { Model as _Model } from "./Model";
 export { _Model as Model };
 
+import { PolymorphicModel as _PolymorphicModel } from "./PolymorphicModel";
+export { _PolymorphicModel as PolymorphicModel };
+
 import { Builder as _Builder } from "./Builder";
 export { _Builder as Builder };
 
