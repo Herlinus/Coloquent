@@ -79,6 +79,10 @@ export abstract class RetrievalResponse extends Response
         if (!this.modelIndex.get(type)) {
             this.modelIndex.set(type, new Map<Model>());
         }
+        if (modelType.polymorphicOn)
+        {
+            modelType = modelType.getClass(doc) || modelType
+        }
         let model: Model = new modelType();
         model.populateFromResource(doc);
         this.modelIndex.get(type).set(id, model);
