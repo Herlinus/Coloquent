@@ -1,4 +1,4 @@
-Fork of the Coloquent lib. The purpose of this is to implement polymoprhic model.
+Fork of the [Coloquent](https://github.com/DavidDuwaer/coloquent.git) lib. The purpose of this is to implement polymoprhic model.
 
 
 ![Coloquent](https://user-images.githubusercontent.com/8791690/28809914-c0c8e938-7686-11e7-8d22-599328c73cb5.png)
