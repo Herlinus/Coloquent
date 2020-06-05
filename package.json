@@ -1,5 +1,5 @@
 {
-  "name": "coloquent",
+  "name": "@herlinus/coloquent",
   "version": "2.2.0",
   "description": "Library for retrieving model objects from a JSON-API, with a fluent syntax inspired by Laravel Eloquent.",
   "keywords": [
@@ -17,25 +17,25 @@
   ],
   "author": "David Duwaer",
   "license": "MIT",
-  "homepage": "https://github.com/DavidDuwaer/coloquent#readme",
+  "homepage": "https://github.com/Herlinus/coloquent#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DavidDuwaer/coloquent.git"
+    "url": "git+https://github.com/Herlinus/coloquent.git"
   },
   "bugs": {
-    "url": "https://github.com/DavidDuwaer/coloquent/issues"
+    "url": "https://github.com/Herlinus/coloquent/issues"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "directories": {
-    "dist": "dist"
+    "test": "tests"
   },
   "scripts": {
     "clear": "rimraf dist",
     "build": "npm run clear && tsc",
     "build-dev": "npm run clear && tsc --sourceMap",
     "test": "npm run build-dev && mocha -r ts-node/register tests/**/*.test.ts",
-    "dist": "npm install && npm run test && npm publish"
+    "dist": "npm install && npm run test && npm publish --access public"
   },
   "dependencies": {
     "axios": ">=0.18.1",
