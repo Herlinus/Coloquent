@@ -69,7 +69,19 @@ export abstract class Model
     protected dates: {[key: string]: string};
 
     private static dateFormatter;
-
+    public static JsonApiBaseType_ : string;
+    public static getJsonApiBaseType(): string{
+        if(this.JsonApiBaseType_){
+            return this.JsonApiBaseType_;    
+        }
+        return this.name
+    }
+    public getJsonApiBaseType(): string{
+        if(this.constructor.JsonApiBaseType_){
+            return this.constructor.JsonApiBaseType_;    
+        }
+        return this.constructor.name
+    }
     constructor()
     {
         this.type = typeof this;
