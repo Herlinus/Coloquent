@@ -6,7 +6,7 @@ export class Relation
 
     private referringObject: Model | undefined;
 
-    private name: string;
+    protected name: string;
 
     constructor(relatedType, referringObject: Model | undefined = undefined, name: string | undefined = undefined)
     {

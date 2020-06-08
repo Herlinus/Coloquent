@@ -16,6 +16,11 @@ export { _PaginationStrategy as PaginationStrategy };
 import { SortDirection as _SortDirection } from "./SortDirection";
 export { _SortDirection as SortDirection };
 
+import {toManyRelation as toManyRelation_, toOneRelation as toOneRelation_, Attribut as Attribut_} from "./Helpers"
+
+export { toManyRelation_ as toManyRelation};
+export { toOneRelation_ as toOneRelation};
+export { Attribut_ as Attribut};
 /**
  * httpclient
  */

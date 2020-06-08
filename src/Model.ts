@@ -14,6 +14,7 @@ import {HttpClient} from "./httpclient/HttpClient";
 import {AxiosHttpClient} from "./httpclient/axios/AxiosHttpClient";
 import {HttpClientResponse} from "./httpclient/HttpClientResponse";
 
+
 export interface Model {
     constructor: typeof Model;
 }
@@ -402,7 +403,7 @@ export abstract class Model
         return this.paginationLimitParName;
     }
 
-    protected getRelation(relationName: string): any
+    public getRelation(relationName: string): any
     {
         return this.relations.get(relationName);
     }

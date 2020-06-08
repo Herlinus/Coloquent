@@ -41,4 +41,7 @@ export class ToManyRelation extends Relation implements QueryMethods
         return new Builder(this.getType(), this.getName(), this.getReferringObject().getJsonApiType(), this.getReferringObject().getApiId())
             .option(queryParameter, value);
     }
+    get data(){
+        return this.getReferringObject().getRelation(this.name)
+    }
 }

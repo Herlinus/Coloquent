@@ -94,7 +94,10 @@ export abstract class RetrievalResponse extends Response
             }
 
             const includeSubtree = includeTree ? includeTree[resourceRelationName] : {};
-            let relation: Relation = model[modelRelationName]();
+            let relation: Relation = model[modelRelationName];
+            if (relation instanceof Function){
+                relation = relation();
+            }
             if (relation instanceof ToManyRelation) {
                 let relatedStubs: ResourceStub[] = (doc.relationships !== undefined && doc.relationships[resourceRelationName] !== undefined)
                     ?
