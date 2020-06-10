@@ -1,12 +1,12 @@
-export const Attribut: any = (readOnly = false) => (target: any, key: string, descriptor: PropertyDescriptor): PropertyDescriptor => {
+export const Attribut: any = (name=null, readOnly = false) => (target: any, key: string, descriptor: PropertyDescriptor): PropertyDescriptor => {
     if (readOnly){
-      target.readOnlyAttributes.push(key);
+      target.readOnlyAttributes.push(name || key);
     }
     const getter = function(this) {
-        return this.getAttribute(key);
+        return this.getAttribute(name || key);
     };
     const setter = function(this, value) {
-        this.setAttribute(key, value);
+        this.setAttribute(name || key, value);
     };
     descriptor = descriptor || {};
     descriptor.get = getter;
