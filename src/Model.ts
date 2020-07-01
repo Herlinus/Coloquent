@@ -101,6 +101,7 @@ export abstract class Model
     private initHttpClient(): void
     {
         Model.httpClient.setBaseUrl(this.getJsonApiBaseUrl());
+        Model.httpClient.setAdditionalHeaders(this.getAdditionalHeaders());
     }
 
     /**
@@ -341,6 +342,9 @@ export abstract class Model
      */
     public abstract getJsonApiBaseUrl(): string;
 
+    public getAdditionalHeaders(): any{
+        return {};
+    }
     /**
      * Allows you to get the current HTTP client (AxiosHttpClient by default), e.g. to alter its configuration.
      * @returns {HttpClient}

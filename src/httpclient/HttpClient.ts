@@ -3,6 +3,8 @@ export interface HttpClient
 {
     setBaseUrl(baseUrl: string): void
 
+    setAdditionalHeaders(additionalHeaders: any): void
+
     /**
      * `withCredentials` indicates whether or not cross-site Access-Control requests
      * should be made using credentials
