@@ -1,5 +1,8 @@
 export const Attribut: any = (name=null, readOnly = false) => (target: any, key: string, descriptor: PropertyDescriptor): PropertyDescriptor => {
     if (readOnly){
+      if (!target.readOnlyAttributes){
+        target.readOnlyAttributes = [];
+      }
       target.readOnlyAttributes.push(name || key);
     }
     const getter = function(this) {

@@ -65,7 +65,7 @@ export abstract class Model
 
     private static httpClient: HttpClient;
 
-    protected readOnlyAttributes: string[];
+    public readOnlyAttributes: string[] = [];
 
     protected dates: {[key: string]: string};
 
@@ -88,7 +88,6 @@ export abstract class Model
         this.type = typeof this;
         this.relations = new Map();
         this.attributes = new Map();
-        this.readOnlyAttributes = [];
         this.dates = {};
 
         if (!Model.httpClient) {
