@@ -84,7 +84,7 @@ export abstract class RetrievalResponse extends Response
             modelType = modelType.getClass(doc) || modelType
         }
         let model: Model = new modelType();
-        model.populateFromResource(doc);
+        model.populateFromResource(doc, true);
         this.modelIndex.get(type).set(id, model);
         for (let resourceRelationName in {...includeTree, ...doc.relationships}) {
             const modelRelationName = this.convertRelationNameToCamelCase(resourceRelationName);
@@ -112,7 +112,7 @@ export abstract class RetrievalResponse extends Response
                         r.push(relatedModel);
                     }
                 }
-                model.setRelation(modelRelationName, r);
+                model.setRelation(modelRelationName, r, true);
             } else if (relation instanceof ToOneRelation) {
                 let stub: ResourceStub = (doc.relationships !== undefined && doc.relationships[resourceRelationName] !== undefined)
                     ?
@@ -127,7 +127,7 @@ export abstract class RetrievalResponse extends Response
                         relatedModel = this.indexAsModel(relatedDoc, relation.getType(), includeSubtree);
                     }
                 }
-                model.setRelation(modelRelationName, relatedModel);
+                model.setRelation(modelRelationName, relatedModel, true);
             } else {
                 throw new Error('Unknown type of Relation encountered: ' + typeof relation);
             }

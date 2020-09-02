@@ -82,7 +82,6 @@ describe('Model1', () => {
         superHero.save()
             .then(function (response: SaveResponse) {
                 assert.equal(superHero.getApiId(), response.getModelId());
-
                 done();
             });
 
@@ -228,12 +227,10 @@ describe('Model1', () => {
 
         hero.setRelation('rival', rival);
         hero.save();
-
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             const requestBody = JSON.parse(request.config.data);
             const relationships = requestBody.data.relationships;
-
             expect(relationships.rival.data).to.be.an('object');
             expect(relationships.rival.data.id).to.equal(rival.getApiId());
             done();

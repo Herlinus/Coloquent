@@ -10,14 +10,14 @@ export class SaveResponse extends Response
     constructor(
         httpClientResponse: HttpClientResponse,
         modelType: Function,
-        responseBody: JsonApiResponseBody
+        responseBody: JsonApiResponseBody,
     ) {
         super(undefined, httpClientResponse);
         const data = responseBody.data;
         if (data !== undefined && data !== null)
         {
             const model = new (<any> modelType)();
-            model.populateFromResource(responseBody.data);
+            model.populateFromResource(responseBody.data, true);
             this.model = model;
         }
         else

@@ -179,11 +179,16 @@ export abstract class Model
         }
         let relationships = {};
         for (let key in this.relations.toArray()) {
-            let relation = this.relations.get(key);
-            if (relation instanceof Model) {
-                relationships[key] = this.serializeToOneRelation(relation);
-            } else if (relation instanceof Array && relation.length > 0) {
-                relationships[key] = this.serializeToManyRelation(relation);
+            if (this.relations.hasChanged(key))
+            {
+                let relation = this.relations.get(key);
+                if (relation instanceof Model) {
+                    relationships[key] = this.serializeToOneRelation(relation);
+                } else if (relation instanceof Array) {
+                    relationships[key] = this.serializeToManyRelation(relation);
+                } else if (relation === null){
+                    relationships[key] = null
+                }
             }
         }
 
@@ -224,6 +229,7 @@ export abstract class Model
         if (!this.hasId) {
             return this.create();
         }
+
 
         let payload = this.serialize();
         return Model.httpClient
@@ -364,11 +370,11 @@ export abstract class Model
         return this.jsonApiType;
     }
 
-    public populateFromResource(resource: Resource): void
+    public populateFromResource(resource: Resource, original?:boolean): void
     {
         this.id = resource.id;
         for (let key in resource.attributes) {
-            this.setAttribute(key, resource.attributes[key]);
+            this.setAttribute(key, resource.attributes[key], original);
         }
     }
 
@@ -407,9 +413,9 @@ export abstract class Model
         return this.relations.get(relationName);
     }
 
-    public setRelation(relationName: string, value: any): void
+    public setRelation(relationName: string, value: any, orginal?: boolean): void
     {
-        this.relations.set(relationName, value);
+        this.relations.set(relationName, value, orginal);
     }
 
     public getAttributes(): {[key: string]: any}
@@ -440,7 +446,7 @@ export abstract class Model
         return this.dates.hasOwnProperty(attributeName);
     }
 
-    protected setAttribute(attributeName: string, value: any): void
+    protected setAttribute(attributeName: string, value: any, original?:boolean): void
     {
         if (this.isDateAttribute(attributeName)) {
             if (!Date.parse(value)) {
@@ -449,7 +455,7 @@ export abstract class Model
             value = (<any> Model.getDateFormatter()).parseDate(value, this.dates[attributeName]);
         }
 
-        this.attributes.set(attributeName, value);
+        this.attributes.set(attributeName, value, original);
     }
 
     /**
@@ -502,5 +508,9 @@ export abstract class Model
         return this.id !== undefined
             && this.id !== null
             && this.id !== '';
+    }
+    public isDirty(): boolean
+    {
+        return this.attributes.isDirty() || this.relations.isDirty()
     }
 }
