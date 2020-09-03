@@ -30,7 +30,7 @@ export class Map<T>
 
     public isDirty(): boolean
     {
-        for (let key in Object.keys(this.changed))
+        for (let key of Object.keys(this.changed))
         {
             if (this.changed[key] !== this.data[key])
                 return true
