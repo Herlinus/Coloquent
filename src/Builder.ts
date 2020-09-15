@@ -29,6 +29,8 @@ export class Builder implements QueryMethods
      */
     private forceSingular: boolean;
 
+    private baseUrl:string = '';
+
     constructor(
         modelType: typeof Model,
         queriedRelationName: string | undefined = undefined,
@@ -41,6 +43,7 @@ export class Builder implements QueryMethods
         baseModelJsonApiType = baseModelJsonApiType
             ? baseModelJsonApiType
             : modelInstance.getJsonApiType();
+        this.baseUrl = modelInstance.getJsonApiBaseUrl();
         this.query = new Query(baseModelJsonApiType, queriedRelationName, baseModelJsonApiId);
         this.initPaginationSpec();
         this.httpClient = modelType.getHttpClient();
@@ -53,7 +56,7 @@ export class Builder implements QueryMethods
         clone.getQuery().getPaginationSpec().setPage(page);
         if (this.forceSingular) {
             return <Promise<SingularResponse>> this.getHttpClient()
-                .get(clone.getQuery().toString())
+                .get(this.baseUrl+'/'+clone.getQuery().toString())
                 .then(
                     (response: HttpClientResponse) => {
                         return new SingularResponse(clone.getQuery(), response, this.modelType, response.getData());
@@ -81,7 +84,7 @@ export class Builder implements QueryMethods
         const clone = this.clone();
         clone.getQuery().getPaginationSpec().setPageLimit(1);
         return <Promise<SingularResponse>> this.getHttpClient()
-            .get(this.query.toString())
+            .get(this.baseUrl+'/'+this.query.toString())
             .then(
                 (response: HttpClientResponse) => {
                     return new SingularResponse(this.query, response, this.modelType, response.getData());
@@ -103,7 +106,7 @@ export class Builder implements QueryMethods
         const clone = this.clone();
         clone.query.setIdToFind(id);
         return <Promise<SingularResponse>> clone.getHttpClient()
-            .get(clone.getQuery().toString())
+            .get(this.baseUrl+'/'+clone.getQuery().toString())
             .then(
                 (response: HttpClientResponse) => {
                     return new SingularResponse(clone.getQuery(), response, this.modelType, response.getData());

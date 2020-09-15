@@ -187,7 +187,7 @@ export abstract class Model
                 } else if (relation instanceof Array) {
                     relationships[key] = this.serializeToManyRelation(relation);
                 } else if (relation === null){
-                    relationships[key] = null
+                    relationships[key] = { data: null };
                 }
             }
         }
@@ -234,7 +234,7 @@ export abstract class Model
         let payload = this.serialize();
         return Model.httpClient
             .patch(
-                this.getJsonApiType()+'/'+this.id,
+                this.getJsonApiBaseUrl()+'/'+this.getJsonApiType()+'/'+this.id,
                 payload
             )
             .then(
@@ -254,7 +254,7 @@ export abstract class Model
         let payload = this.serialize();
         return Model.httpClient
             .post(
-                this.getJsonApiType(),
+                this.getJsonApiBaseUrl()+'/'+this.getJsonApiType(),
                 payload
             )
             .then(
@@ -275,7 +275,7 @@ export abstract class Model
             throw new Error('Cannot delete a model with no ID.');
         }
         return Model.httpClient
-            .delete(this.getJsonApiType()+'/'+this.id)
+            .delete(this.getJsonApiBaseUrl()+'/'+this.getJsonApiType()+'/'+this.id)
             .then(function () {});
     }
 
