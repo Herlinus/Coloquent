@@ -98,7 +98,7 @@ export abstract class Model
         this.attributes = new Map();
         this.dates = {};
 
-        if (!Model.httpClient) {
+        if (!Model._httpClient[this.getJsonApiBaseUrl()]) {
             Model._httpClient[this.getJsonApiBaseUrl()] = new AxiosHttpClient();
         }
         this.initHttpClient();
@@ -107,7 +107,7 @@ export abstract class Model
 
     private initHttpClient(): void
     {
-        Model.httpClient.setBaseUrl(this.getJsonApiBaseUrl());
+        this.constructor.httpClient.setBaseUrl(this.getJsonApiBaseUrl());
     }
 
     /**
@@ -240,7 +240,7 @@ export abstract class Model
 
 
         let payload = this.serialize();
-        return Model.httpClient
+        return this.constructor.httpClient
             .patch(
                 this.getJsonApiType()+'/'+this.id,
                 payload
@@ -260,7 +260,7 @@ export abstract class Model
     public create(): Promise<SaveResponse>
     {
         let payload = this.serialize();
-        return Model.httpClient
+        return this.constructor.httpClient
             .post(
                 this.getJsonApiType(),
                 payload
@@ -282,7 +282,7 @@ export abstract class Model
         if (!this.hasId) {
             throw new Error('Cannot delete a model with no ID.');
         }
-        return Model.httpClient
+        return this.constructor.httpClient
             .delete(this.getJsonApiType()+'/'+this.id)
             .then(function () {});
     }
