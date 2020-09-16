@@ -63,7 +63,15 @@ export abstract class Model
 
     private attributes: Map<any>;
 
-    private static httpClient: HttpClient;
+    public static getJsonApiBaseUrl(){ return ''}
+    
+    protected static _httpClient = {'': new AxiosHttpClient()};
+    static get  httpClient(): HttpClient{
+        return this._httpClient[this.getJsonApiBaseUrl()]
+    }
+    static set  httpClient(value: HttpClient){
+        this._httpClient[this.getJsonApiBaseUrl()] = value
+    }
 
     public readOnlyAttributes: string[] = [];
 
@@ -91,10 +99,10 @@ export abstract class Model
         this.dates = {};
 
         if (!Model.httpClient) {
-            Model.httpClient = new AxiosHttpClient();
+            Model._httpClient[this.getJsonApiBaseUrl()] = new AxiosHttpClient();
         }
-
         this.initHttpClient();
+
     }
 
     private initHttpClient(): void
