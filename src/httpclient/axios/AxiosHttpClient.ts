@@ -28,28 +28,28 @@ export class AxiosHttpClient implements HttpClient
         this.axiosInstance.defaults.withCredentials = withCredientials;
     }
 
-    get(url: string): HttpClientPromise {
-        return new AxiosHttpClientPromise(this.axiosInstance.get(url));
+    get(url: string, config?: any): HttpClientPromise {
+        return new AxiosHttpClientPromise(this.axiosInstance.get(url, { ...config }));
     }
 
-    delete(url: string): HttpClientPromise {
-        return new AxiosHttpClientPromise(this.axiosInstance.delete(url));
+    delete(url: string, config?: any): HttpClientPromise {
+        return new AxiosHttpClientPromise(this.axiosInstance.delete(url, { ...config }));
     }
 
-    head(url: string): HttpClientPromise {
-        return new AxiosHttpClientPromise(this.axiosInstance.head(url));
+    head(url: string, config?: any): HttpClientPromise {
+        return new AxiosHttpClientPromise(this.axiosInstance.head(url, { ...config }));
     }
 
-    post(url: string, data?: any): HttpClientPromise {
-        return new AxiosHttpClientPromise(this.axiosInstance.post(url, data));
+    post(url: string, data?: any, config?: any): HttpClientPromise {
+        return new AxiosHttpClientPromise(this.axiosInstance.post(url, data, { ...config }));
     }
 
-    put(url: string, data?: any): HttpClientPromise {
-        return new AxiosHttpClientPromise(this.axiosInstance.put(url, data));
+    put(url: string, data?: any, config?: any): HttpClientPromise {
+        return new AxiosHttpClientPromise(this.axiosInstance.put(url, data, { ...config }));
     }
 
-    patch(url: string, data?: any): HttpClientPromise {
-        return new AxiosHttpClientPromise(this.axiosInstance.patch(url, data));
+    patch(url: string, data?: any, config?: any): HttpClientPromise {
+        return new AxiosHttpClientPromise(this.axiosInstance.patch(url, data, { ...config }));
     }
 
     public getImplementingClient(): AxiosInstance

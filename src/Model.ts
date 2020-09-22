@@ -232,6 +232,10 @@ export abstract class Model
         };
     }
 
+    protected beforeSave() {
+        return {};
+    }
+
     public save(): Promise<SaveResponse>
     {
         if (!this.hasId) {
@@ -239,11 +243,13 @@ export abstract class Model
         }
 
 
+        const preprocessResult = this.beforeSave();
         let payload = this.serialize();
         return this.constructor.httpClient
             .patch(
                 this.getJsonApiType()+'/'+this.id,
-                payload
+                payload,
+                preprocessResult
             )
             .then(
                 (response: HttpClientResponse) => {
@@ -259,11 +265,13 @@ export abstract class Model
 
     public create(): Promise<SaveResponse>
     {
+        const preprocessResult = this.beforeSave();
         let payload = this.serialize();
         return this.constructor.httpClient
             .post(
                 this.getJsonApiType(),
-                payload
+                payload,
+                preprocessResult
             )
             .then(
                 (response: HttpClientResponse) => {
